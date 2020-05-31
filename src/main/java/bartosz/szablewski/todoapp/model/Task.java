@@ -18,4 +18,8 @@ public class Task {
     @NotBlank(message = "Tasks description must be not empty")
     private String description;
     private String done;
+
+    public long getId() {
+        return id;
+    }
 }
