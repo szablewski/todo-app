@@ -4,9 +4,9 @@ import bartosz.szablewski.todoapp.model.Task;
 import bartosz.szablewski.todoapp.repository.TaskRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -60,4 +60,20 @@ class TaskController {
         taskRepository.save(toUpdate);
         return ResponseEntity.noContent().build();
     }
+
+    @Transactional
+    @PatchMapping("/tasks/{id}")
+    public ResponseEntity<?> toggleTask(@PathVariable int id) {
+        if (!taskRepository.existsById(id)) {
+            logger.warn("ERROR exist task by ID: " + id);
+            return ResponseEntity.notFound().build();
+        }
+
+        logger.warn("Toggle task by ID: " + id);
+        taskRepository.findById(id)
+                .ifPresent(task -> task.setDone(!task.isDone()));
+        return ResponseEntity.noContent().build();
+    }
+
+
 }

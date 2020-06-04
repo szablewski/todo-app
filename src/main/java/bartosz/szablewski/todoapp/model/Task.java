@@ -1,13 +1,16 @@
 package bartosz.szablewski.todoapp.model;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 @Entity
-@Data
+@Setter
+@Getter
+@NoArgsConstructor
 @Table(name = "tasks")
 public class Task {
 
@@ -24,5 +27,13 @@ public class Task {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public boolean isDone() {
+        return done;
+    }
+
+    public void setDone(boolean done) {
+        this.done = done;
     }
 }
