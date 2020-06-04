@@ -4,6 +4,7 @@ import bartosz.szablewski.todoapp.model.Task;
 import bartosz.szablewski.todoapp.repository.TaskRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,7 +42,7 @@ class TaskController {
     }
 
     @GetMapping("/tasks/{id}")
-    ResponseEntity<Task> readTask(@PathVariable("id") long id) {
+    ResponseEntity<Task> readTask(@PathVariable("id") int id) {
         logger.warn("Get one tasks by ID: " + id);
         return taskRepository.findById(id)
                 .map(ResponseEntity::ok)
@@ -49,7 +50,7 @@ class TaskController {
     }
 
     @PutMapping("/tasks/{id}")
-    ResponseEntity<?> updateTask(@PathVariable long id, @RequestBody @Valid Task toUpdate) {
+    ResponseEntity<?> updateTask(@PathVariable int id, @RequestBody @Valid Task toUpdate) {
         if (!taskRepository.existsById(id)) {
             logger.warn("ERROR exist task by ID: " + id);
             return ResponseEntity.notFound().build();
