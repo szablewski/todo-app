@@ -43,21 +43,21 @@ class TaskController {
 
     @GetMapping("/tasks/{id}")
     ResponseEntity<Task> readTask(@PathVariable("id") int id) {
-        logger.warn("Get one tasks by ID: " + id);
         return taskRepository.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @Transactional
     @PutMapping("/tasks/{id}")
     ResponseEntity<?> updateTask(@PathVariable int id, @RequestBody @Valid Task toUpdate) {
         if (!taskRepository.existsById(id)) {
             logger.warn("ERROR exist task by ID: " + id);
             return ResponseEntity.notFound().build();
         }
-        logger.warn("Update task by ID: " + id);
-        toUpdate.setId(id);
-        taskRepository.save(toUpdate);
+
+        taskRepository.findById(id)
+                .ifPresent(task -> task.updateForm(toUpdate));
         return ResponseEntity.noContent().build();
     }
 
@@ -69,7 +69,6 @@ class TaskController {
             return ResponseEntity.notFound().build();
         }
 
-        logger.warn("Toggle task by ID: " + id);
         taskRepository.findById(id)
                 .ifPresent(task -> task.setDone(!task.isDone()));
         return ResponseEntity.noContent().build();

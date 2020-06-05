@@ -1,19 +1,15 @@
 package bartosz.szablewski.todoapp.model;
 
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 @Entity
-@Setter
-@Getter
 @NoArgsConstructor
 @Table(name = "tasks")
-public class Task {
+public class Task extends Audit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,8 +18,8 @@ public class Task {
     private String description;
     private boolean done;
     private LocalDateTime deadline;
-    private LocalDateTime createdOn;
-    private LocalDateTime updateOn;
+    @Embedded
+    private Audit audit = new Audit();
 
     public int getId() {
         return id;
@@ -41,19 +37,10 @@ public class Task {
         this.done = done;
     }
 
-    public void updateForm(Task source){
+    public void updateForm(Task source) {
         description = source.description;
         done = source.done;
         deadline = source.deadline;
     }
 
-    @PrePersist
-    void prePersist(){
-        createdOn = LocalDateTime.now();
-    }
-
-    @PreUpdate
-    void preMerge(){
-        updateOn = LocalDateTime.now();
-    }
 }
