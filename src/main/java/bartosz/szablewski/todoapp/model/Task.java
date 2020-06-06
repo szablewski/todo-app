@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor
 @Table(name = "tasks")
-public class Task extends Audit {
+public class Task {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
