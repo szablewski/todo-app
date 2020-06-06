@@ -3,7 +3,6 @@ package bartosz.szablewski.todoapp.repository;
 import bartosz.szablewski.todoapp.model.Task;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,7 +16,9 @@ public interface TaskRepository {
 
     boolean existsById(int id);
 
-    List<Task> findByDone(@Param("state") boolean done);
+    boolean existsByDoneIsFalseAndGroup_Id(Integer group_id);
+
+    List<Task> findByDone(boolean done);
 
     Task save(Task entity);
 }

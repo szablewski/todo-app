@@ -4,25 +4,23 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
-@Table(name = "tasks")
-public class Task {
+@Table(name = "task_groups")
+public class TaskGroups {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    @NotBlank(message = "Tasks description must be not empty")
+    @NotBlank(message = "Task groups description must be not empty")
     private String description;
     private boolean done;
-    private LocalDateTime deadline;
     @Embedded
     private Audit audit = new Audit();
-    @ManyToOne
-    @JoinColumn(name = "task_group_id")
-    private TaskGroups groups;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "groups")
+    private Set<Task> tasks;
 
     public int getId() {
         return id;
@@ -40,18 +38,11 @@ public class Task {
         this.done = done;
     }
 
-    public void updateForm(Task source) {
-        description = source.description;
-        done = source.done;
-        deadline = source.deadline;
-        groups = source.groups;
+    public Set<Task> getTasks() {
+        return tasks;
     }
 
-     TaskGroups getGroups() {
-        return groups;
-    }
-
-     void setGroups(TaskGroups groups) {
-        this.groups = groups;
+    void setTasks(final Set<Task> tasks) {
+        this.tasks = tasks;
     }
 }

@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 interface SqlTaskRepository extends TaskRepository, JpaRepository<Task, Integer> {
+
+    @Override
+    boolean existsByDoneIsFalseAndGroup_Id(Integer group_id);
 }
