@@ -12,11 +12,11 @@ public interface TaskRepository {
 
     Page<Task> findAll(Pageable page);
 
-    Optional<Task> findById(int id);
+    Optional<Task> findById(Integer id);
 
     boolean existsById(int id);
 
-    boolean existsByDoneIsFalseAndGroup_Id(Integer group_id);
+    boolean existsByDoneIsFalseAndGroups_Id(int groupId);
 
     List<Task> findByDone(boolean done);
 

@@ -14,7 +14,7 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    @NotBlank(message = "Tasks description must be not empty")
+    @NotBlank(message = "Task's description must be not empty")
     private String description;
     private boolean done;
     private LocalDateTime deadline;

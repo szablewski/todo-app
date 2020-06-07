@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 interface SqlTaskRepository extends TaskRepository, JpaRepository<Task, Integer> {
 
     @Override
-    boolean existsByDoneIsFalseAndGroup_Id(Integer group_id);
+    boolean existsByDoneIsFalseAndGroups_Id(int groupId);
 }

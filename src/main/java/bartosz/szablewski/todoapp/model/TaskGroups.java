@@ -14,13 +14,15 @@ public class TaskGroups {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    @NotBlank(message = "Task groups description must be not empty")
+    @NotBlank(message = "Task group's description must be not empty")
     private String description;
     private boolean done;
-    @Embedded
-    private Audit audit = new Audit();
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "groups")
     private Set<Task> tasks;
+    @ManyToOne
+    @JoinColumn(name = "project_id")
+    private Project project;
+
 
     public int getId() {
         return id;
