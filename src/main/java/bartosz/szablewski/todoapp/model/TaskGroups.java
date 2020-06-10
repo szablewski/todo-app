@@ -32,6 +32,14 @@ public class TaskGroups {
         this.id = id;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public boolean isDone() {
         return done;
     }
@@ -44,7 +52,7 @@ public class TaskGroups {
         return tasks;
     }
 
-    void setTasks(final Set<Task> tasks) {
+    public void setTasks(final Set<Task> tasks) {
         this.tasks = tasks;
     }
 }

@@ -1,13 +1,10 @@
 package bartosz.szablewski.todoapp.model;
 
-import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 @Entity
-@NoArgsConstructor
 @Table(name = "tasks")
 public class Task {
 
@@ -24,12 +21,28 @@ public class Task {
     @JoinColumn(name = "task_group_id")
     private TaskGroups groups;
 
+    public Task() {
+    }
+
+    public Task(@NotBlank(message = "Task's description must be not empty") String description, LocalDateTime deadline) {
+        this.description = description;
+        this.deadline = deadline;
+    }
+
     public int getId() {
         return id;
     }
 
     void setId(int id) {
         this.id = id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    void setDescription(String description) {
+        this.description = description;
     }
 
     public boolean isDone() {
@@ -40,6 +53,14 @@ public class Task {
         this.done = done;
     }
 
+    public LocalDateTime getDeadline() {
+        return deadline;
+    }
+
+    void setDeadline(LocalDateTime deadline) {
+        this.deadline = deadline;
+    }
+
     public void updateForm(Task source) {
         description = source.description;
         done = source.done;
@@ -47,11 +68,11 @@ public class Task {
         groups = source.groups;
     }
 
-     TaskGroups getGroups() {
+    TaskGroups getGroups() {
         return groups;
     }
 
-     void setGroups(TaskGroups groups) {
+    void setGroups(TaskGroups groups) {
         this.groups = groups;
     }
 }
