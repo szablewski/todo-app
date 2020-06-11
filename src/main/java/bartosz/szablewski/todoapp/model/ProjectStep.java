@@ -44,7 +44,7 @@ public class ProjectStep {
         this.daysToDeadline = daysToDeadline;
     }
 
-    Project getProject() {
+    public Project getProject() {
         return project;
     }
 

@@ -37,7 +37,7 @@ public class Project {
         this.description = description;
     }
 
-    Set<TaskGroups> getGroups() {
+    public Set<TaskGroups> getGroups() {
         return groups;
     }
 
