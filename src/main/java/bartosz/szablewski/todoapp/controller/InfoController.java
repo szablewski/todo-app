@@ -15,6 +15,6 @@ class InfoController {
 
     @GetMapping("/info/prop")
     boolean prop() {
-        return myProp.isAllowMultipleTasksFormTemplate();
+        return myProp.getTemplate().isAllowMultipleTasksFormTemplate();
     }
 }
