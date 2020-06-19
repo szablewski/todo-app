@@ -1,5 +1,6 @@
 package bartosz.szablewski.todoapp.service;
 
+import bartosz.szablewski.todoapp.model.TaskGroups;
 import bartosz.szablewski.todoapp.repository.TaskGroupsRepository;
 import bartosz.szablewski.todoapp.repository.TaskRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -31,6 +32,25 @@ class TaskGroupServiceTest {
     }
 
     @Test
+    @DisplayName("should toggle group")
+    void toggleGroup_workAsExpected() {
+        //given
+        TaskRepository mockTaskRepository = taskRepositoryReturning(false);
+        //and
+        var group = new TaskGroups();
+        var beforeToggle = group.isDone();
+        //and
+        var mockRepository = mock(TaskGroupsRepository.class);
+        when(mockRepository.findById(anyInt())).thenReturn(Optional.of(group));
+        //start under test
+        var toTest = new TaskGroupService(mockRepository, mockTaskRepository);
+        //when
+        toTest.toggleGroup(0);
+        //then
+        assertThat(group.isDone()).isEqualTo(!beforeToggle);
+    }
+
+    @Test
     @DisplayName("should throw when no group")
     void toggleGroup_wrongId_throwsIllegarArgumentException() {
         //given
@@ -47,6 +67,7 @@ class TaskGroupServiceTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("not found");
     }
+
 
     private TaskRepository taskRepositoryReturning(final boolean result) {
         var mockTaskRepository = mock(TaskRepository.class);
