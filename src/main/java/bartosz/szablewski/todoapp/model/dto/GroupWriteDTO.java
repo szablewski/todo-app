@@ -31,7 +31,7 @@ public class GroupWriteDTO {
         result.setDescription(description);
         result.setTasks(
                 tasks.stream()
-                        .map(GroupTaskWriteDTO::toTask)
+                        .map(source -> source.toTask(result))
                         .collect(Collectors.toSet())
         );
         return result;

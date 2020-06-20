@@ -21,12 +21,19 @@ public class Task {
     @JoinColumn(name = "task_group_id")
     private TaskGroups groups;
 
-    public Task() {
+    Task() {
     }
 
-    public Task(@NotBlank(message = "Task's description must be not empty") String description, LocalDateTime deadline) {
+    public Task(String description, LocalDateTime deadline) {
+        this(description, deadline, null);
+    }
+
+    public Task(String description, LocalDateTime deadline, TaskGroups groups) {
         this.description = description;
         this.deadline = deadline;
+        if (groups != null){
+            this.groups = groups;
+        }
     }
 
     public int getId() {

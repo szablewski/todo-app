@@ -1,6 +1,7 @@
 package bartosz.szablewski.todoapp.model.dto;
 
 import bartosz.szablewski.todoapp.model.Task;
+import bartosz.szablewski.todoapp.model.TaskGroups;
 
 import java.time.LocalDateTime;
 
@@ -25,8 +26,8 @@ public class GroupTaskWriteDTO {
         this.deadline = deadline;
     }
 
-    public Task toTask(){
-        return new Task(description, deadline);
+    public Task toTask(TaskGroups groups){
+        return new Task(description, deadline, groups);
 
     }
 }

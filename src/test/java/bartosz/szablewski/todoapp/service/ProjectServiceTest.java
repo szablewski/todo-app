@@ -31,7 +31,7 @@ class ProjectServiceTest {
         //and
         TaskConfigurationProperties mockConfig = getConfigurationPropertiesReturning(false);
         //system under test
-        var toTest = new ProjectService(mockGroupRepository, null, mockConfig);
+        var toTest = new ProjectService(mockGroupRepository, null, null ,mockConfig);
 
         //when
         var exception = catchThrowable(() -> toTest.createGroup(LocalDateTime.now(), 1));
@@ -51,7 +51,7 @@ class ProjectServiceTest {
         var mockProjectRepository = mock(ProjectRepository.class);
         when(mockProjectRepository.findById(anyInt())).thenReturn(Optional.empty());
         //system under test
-        var toTest = new ProjectService(null, mockProjectRepository, mockConfig);
+        var toTest = new ProjectService(null, mockProjectRepository, null, mockConfig);
 
         //when
         var exception = catchThrowable(() -> toTest.createGroup(LocalDateTime.now(), 1));
@@ -73,7 +73,7 @@ class ProjectServiceTest {
         //and
         TaskConfigurationProperties mockConfig = getConfigurationPropertiesReturning(true);
         //system under test
-        var toTest = new ProjectService(inMemoryGroupRepository, mockProjectRepository, mockConfig);
+        var toTest = new ProjectService(inMemoryGroupRepository, mockProjectRepository, null, mockConfig);
 
         //when
         var exception = catchThrowable(() -> toTest.createGroup(LocalDateTime.now(), 1));
@@ -96,12 +96,13 @@ class ProjectServiceTest {
         when(mockProjectRepository.findById(anyInt()))
                 .thenReturn(Optional.of(project));
         //and
-        InMemoryGroupRepository inMemoryGroupRepository = new InMemoryGroupRepository();
+        InMemoryGroupRepository inMemoryGroupRepository = inMemoryGroupRepository();
+        var serviceWithInMemRepo = new TaskGroupService(inMemoryGroupRepository, null);
         var countBeforeCall = inMemoryGroupRepository.count();
         //and
         TaskConfigurationProperties mockConfig = getConfigurationPropertiesReturning(true);
         //system under start
-        var toTest = new ProjectService(inMemoryGroupRepository, mockProjectRepository, mockConfig);
+        var toTest = new ProjectService(inMemoryGroupRepository, mockProjectRepository, serviceWithInMemRepo ,mockConfig);
         //when
         GroupReadDTO result = toTest.createGroup(today, 1);
         //then
