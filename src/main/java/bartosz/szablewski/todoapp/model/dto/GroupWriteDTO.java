@@ -1,5 +1,6 @@
 package bartosz.szablewski.todoapp.model.dto;
 
+import bartosz.szablewski.todoapp.model.Project;
 import bartosz.szablewski.todoapp.model.TaskGroups;
 
 import java.util.Set;
@@ -26,7 +27,7 @@ public class GroupWriteDTO {
         this.tasks = tasks;
     }
 
-    public TaskGroups toGroup() {
+    public TaskGroups toGroup(Project project) {
         var result = new TaskGroups();
         result.setDescription(description);
         result.setTasks(
@@ -34,6 +35,7 @@ public class GroupWriteDTO {
                         .map(source -> source.toTask(result))
                         .collect(Collectors.toSet())
         );
+        result.setProject(project);
         return result;
     }
 }

@@ -1,5 +1,6 @@
 package bartosz.szablewski.todoapp.service;
 
+import bartosz.szablewski.todoapp.model.Project;
 import bartosz.szablewski.todoapp.model.TaskGroups;
 import bartosz.szablewski.todoapp.model.dto.GroupReadDTO;
 import bartosz.szablewski.todoapp.model.dto.GroupWriteDTO;
@@ -23,8 +24,12 @@ public class TaskGroupService {
         this.taskRepository = taskRepository;
     }
 
-    public GroupReadDTO createGroups(GroupWriteDTO dto) {
-        TaskGroups result = repository.save(dto.toGroup());
+    public GroupReadDTO createGroups(GroupWriteDTO source) {
+        return createGroups(source, null);
+    }
+
+    GroupReadDTO createGroups(GroupWriteDTO source, Project project) {
+        TaskGroups result = repository.save(source.toGroup(project));
         return new GroupReadDTO(result);
     }
 

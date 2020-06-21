@@ -5,6 +5,7 @@ import bartosz.szablewski.todoapp.model.Project;
 import bartosz.szablewski.todoapp.model.dto.GroupReadDTO;
 import bartosz.szablewski.todoapp.model.dto.GroupTaskWriteDTO;
 import bartosz.szablewski.todoapp.model.dto.GroupWriteDTO;
+import bartosz.szablewski.todoapp.model.dto.ProjectWriteDTO;
 import bartosz.szablewski.todoapp.repository.ProjectRepository;
 import bartosz.szablewski.todoapp.repository.TaskGroupsRepository;
 import org.springframework.stereotype.Service;
@@ -32,8 +33,8 @@ public class ProjectService {
         return projectRepository.findAll();
     }
 
-    public Project save(final Project toSave) {
-        return projectRepository.save(toSave);
+    public Project save(final ProjectWriteDTO toSave) {
+        return projectRepository.save(toSave.toProject());
     }
 
     public GroupReadDTO createGroup(LocalDateTime deadline, int projectId) {
@@ -54,7 +55,7 @@ public class ProjectService {
                                             }
                                     ).collect(Collectors.toSet())
                     );
-                    return taskGroupService.createGroups(targetGroup);
+                    return taskGroupService.createGroups(targetGroup, project);
                 }).orElseThrow(() -> new IllegalArgumentException("Project with given Id not found"));
     }
 }
