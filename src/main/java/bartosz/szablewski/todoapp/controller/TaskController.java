@@ -2,6 +2,7 @@ package bartosz.szablewski.todoapp.controller;
 
 import bartosz.szablewski.todoapp.model.Task;
 import bartosz.szablewski.todoapp.repository.TaskRepository;
+import bartosz.szablewski.todoapp.service.TaskService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping("/tasks")
@@ -19,9 +21,11 @@ class TaskController {
 
     private static final Logger logger = LoggerFactory.getLogger(TaskRepository.class);
     private final TaskRepository taskRepository;
+    private final TaskService service;
 
-    TaskController(final TaskRepository taskRepository) {
+    TaskController(final TaskRepository taskRepository, TaskService service) {
         this.taskRepository = taskRepository;
+        this.service = service;
     }
 
     @PostMapping
@@ -31,9 +35,9 @@ class TaskController {
     }
 
     @GetMapping(params = {"!sort", "!page", "!size"})
-    ResponseEntity<List<Task>> readAllTasks() {
+    CompletableFuture<ResponseEntity<List<Task>>> readAllTasks() {
         logger.warn("Exposing all the tasks!");
-        return ResponseEntity.ok(taskRepository.findAll());
+        return service.readAllAsync().thenApply(ResponseEntity::ok);
     }
 
     @GetMapping
