@@ -85,6 +85,4 @@ class TaskController {
                 .ifPresent(task -> task.setDone(!task.isDone()));
         return ResponseEntity.noContent().build();
     }
-
-
 }

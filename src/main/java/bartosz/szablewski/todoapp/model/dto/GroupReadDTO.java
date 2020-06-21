@@ -8,12 +8,13 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class GroupReadDTO {
-
+    private int id;
     private String description;
     private LocalDateTime deadline;
     private Set<GroupTaskReadDTO> tasks;
 
-    public GroupReadDTO(TaskGroups source){
+    public GroupReadDTO(TaskGroups source) {
+        id = source.getId();
         description = source.getDescription();
         source.getTasks().stream()
                 .map(Task::getDeadline)
@@ -22,6 +23,14 @@ public class GroupReadDTO {
         tasks = source.getTasks().stream()
                 .map(GroupTaskReadDTO::new)
                 .collect(Collectors.toSet());
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getDescription() {
