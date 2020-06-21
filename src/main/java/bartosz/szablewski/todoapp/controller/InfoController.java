@@ -2,9 +2,11 @@ package bartosz.szablewski.todoapp.controller;
 
 import bartosz.szablewski.todoapp.TaskConfigurationProperties;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/info")
 class InfoController {
 
     private TaskConfigurationProperties myProp;
@@ -13,7 +15,7 @@ class InfoController {
         this.myProp = myProp;
     }
 
-    @GetMapping("/info/prop")
+    @GetMapping("/prop")
     boolean prop() {
         return myProp.getTemplate().isAllowMultipleTasksFormTemplate();
     }
