@@ -50,7 +50,7 @@ class TaskController {
     }
 
     @GetMapping("search/done")
-      ResponseEntity<List<Task>> readDoneTasks(@RequestParam(defaultValue = "true") boolean state){
+    ResponseEntity<List<Task>> readDoneTasks(@RequestParam(defaultValue = "true") boolean state) {
         return ResponseEntity.ok(
                 taskRepository.findByDone(state)
         );
