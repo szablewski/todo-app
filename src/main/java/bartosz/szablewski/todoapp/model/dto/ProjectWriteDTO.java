@@ -5,6 +5,7 @@ import bartosz.szablewski.todoapp.model.ProjectStep;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -12,9 +13,10 @@ public class ProjectWriteDTO {
     @NotBlank(message = "Project's description must be not empty")
     private String description;
     @Valid
-    private List<ProjectStep> steps;
+    private List<ProjectStep> steps = new ArrayList<>();
 
     public ProjectWriteDTO() {
+        steps.add(new ProjectStep());
     }
 
     public String getDescription() {
