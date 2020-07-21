@@ -6,11 +6,13 @@ import bartosz.szablewski.todoapp.model.dto.ProjectWriteDTO;
 import bartosz.szablewski.todoapp.service.ProjectService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -29,7 +31,10 @@ class ProjectController {
     }
 
     @PostMapping
-    String addProject(@ModelAttribute("project") ProjectWriteDTO current, Model model){
+    String addProject(@ModelAttribute("project") @Valid ProjectWriteDTO current, BindingResult bindingResult, Model model){
+        if (bindingResult.hasErrors()){
+            return "projects";
+        }
         projectService.save(current);
         model.addAttribute("project", new ProjectWriteDTO());
         model.addAttribute("message", "Dodano projekt!");
@@ -43,7 +48,7 @@ class ProjectController {
     }
 
     @ModelAttribute("projects")
-    List<Project> getProjects(){
+    List<Project> getProjects() {
         return projectService.readAll();
     }
 }
