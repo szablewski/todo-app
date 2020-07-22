@@ -5,4 +5,9 @@ and groups of specific tasks. Each task has its own deadline.
 
 ## Getting Started
 
-`mvn spring-boot:run`
+```
+ $ cd ../todo-app 
+ $ mvn package
+ $ mvn spring boot:run
+```
+Go to http://localhost:8080/
