@@ -3,13 +3,22 @@ package bartosz.szablewski.todoapp.model.dto;
 import bartosz.szablewski.todoapp.model.Project;
 import bartosz.szablewski.todoapp.model.TaskGroups;
 
-import java.util.Set;
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class GroupWriteDTO {
 
+    @NotBlank(message = "Task group's description must be not empty")
     private String description;
-    private Set<GroupTaskWriteDTO> tasks;
+    @Valid
+    private List<GroupTaskWriteDTO> tasks = new ArrayList<>();
+
+    public GroupWriteDTO() {
+        tasks.add(new GroupTaskWriteDTO());
+    }
 
     public String getDescription() {
         return description;
@@ -19,11 +28,11 @@ public class GroupWriteDTO {
         this.description = description;
     }
 
-    public Set<GroupTaskWriteDTO> getTasks() {
+    public List<GroupTaskWriteDTO> getTasks() {
         return tasks;
     }
 
-    public void setTasks(Set<GroupTaskWriteDTO> tasks) {
+    public void setTasks(List<GroupTaskWriteDTO> tasks) {
         this.tasks = tasks;
     }
 

@@ -3,10 +3,12 @@ package bartosz.szablewski.todoapp.model.dto;
 import bartosz.szablewski.todoapp.model.Task;
 import bartosz.szablewski.todoapp.model.TaskGroups;
 
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 public class GroupTaskWriteDTO {
 
+    @NotBlank(message = "Task's description must be not empty")
     private String description;
     private LocalDateTime deadline;
 
@@ -26,7 +28,7 @@ public class GroupTaskWriteDTO {
         this.deadline = deadline;
     }
 
-    public Task toTask(TaskGroups groups){
+    public Task toTask(TaskGroups groups) {
         return new Task(description, deadline, groups);
 
     }

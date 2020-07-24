@@ -24,25 +24,25 @@ class ProjectController {
     }
 
     @GetMapping
-     String projectForm(Model model) {
+    String projectForm(Model model) {
         model.addAttribute("project", new ProjectWriteDTO());
         return "projects";
     }
 
     @PostMapping
-    String addProject(@ModelAttribute("project") @Valid ProjectWriteDTO current, BindingResult bindingResult, Model model){
-        if (bindingResult.hasErrors()){
+    String addProject(@ModelAttribute("project") @Valid ProjectWriteDTO current, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
             return "projects";
         }
         projectService.save(current);
         model.addAttribute("project", new ProjectWriteDTO());
-        model.addAttribute("projects", getProjects() );
+        model.addAttribute("projects", getProjects());
         model.addAttribute("message", "Dodano projekt!");
         return "projects";
     }
 
     @PostMapping(params = "addStep")
-     String addSteps(@ModelAttribute("project") ProjectWriteDTO current){
+    String addSteps(@ModelAttribute("project") ProjectWriteDTO current) {
         current.getSteps().add(new ProjectStep());
         return "projects";
     }
@@ -51,11 +51,11 @@ class ProjectController {
     String createGroup(@ModelAttribute("project") ProjectWriteDTO current,
                        Model model,
                        @PathVariable int id,
-                       @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime deadline){
-        try{
-            projectService.createGroup(deadline,id);
+                       @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime deadline) {
+        try {
+            projectService.createGroup(deadline, id);
             model.addAttribute("message", "Dodano grupę!");
-        }catch (IllegalStateException | IllegalArgumentException e){
+        } catch (IllegalStateException | IllegalArgumentException e) {
             model.addAttribute("message", "Błąd podczas tworzenia grupy!");
         }
         return "projects";

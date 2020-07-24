@@ -24,11 +24,11 @@ public class TaskGroupService {
         this.taskRepository = taskRepository;
     }
 
-    public GroupReadDTO createGroups(GroupWriteDTO source) {
-        return createGroups(source, null);
+    public GroupReadDTO save(GroupWriteDTO source) {
+        return save(source, null);
     }
 
-    GroupReadDTO createGroups(GroupWriteDTO source, Project project) {
+    GroupReadDTO save(GroupWriteDTO source, Project project) {
         TaskGroups result = repository.save(source.toGroup(project));
         return new GroupReadDTO(result);
     }
